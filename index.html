@@ -190,7 +190,7 @@ $('submit').addEventListener('click',()=>{
 /* آدرس Web App اسکریپت گوگل را بین گیومه‌ها بگذارید (باید با https://script.google.com/ شروع شود) */
 const ENDPOINT='https://script.google.com/macros/s/AKfycbw1HwGTeYyNnmNYLnzXUDjmLJisuGWdTIUiVeMFoC190Hk7T_Mvml1cnQzoPve5uoNmvw/exec';
 /* برای بستن ثبت‌نام true بگذارید */
-const CLOSED=false;
+const CLOSED=true;
 const live=()=>ENDPOINT.startsWith('https://script.google.com/');
 const MSG={dup:'این شماره دانشجویی یا کد ملی قبلاً با اطلاعات دیگری ثبت شده است. با برگزارکنندگان تماس بگیرید.',gdup:'کد ملی مهمان قبلاً ثبت شده است. با برگزارکنندگان تماس بگیرید.',full:'ظرفیت ثبت‌نام تکمیل شده است.',closed:'ثبت‌نام بسته شده است.',bad:'اطلاعات واردشده معتبر نیست؛ فرم را بررسی کنید.',server:'خطای سرور؛ چند دقیقه بعد دوباره تلاش کنید.'};
 async function send(o){
