@@ -70,6 +70,7 @@ th{color:var(--mut)}
 
 <main>
   <section id="v-reg">
+    <div class="card ok" id="closed" hidden><h2>ثبت‌نام بسته شد</h2><p>مهلت ثبت‌نام جشن فارغ‌التحصیلی به پایان رسیده است. برای اطلاعات بیشتر با برگزارکنندگان تماس بگیرید.</p></div>
     <div class="card">
       <h2>اطلاعات دانشجو</h2>
       <label class="fl" for="name">نام و نام خانوادگی</label><input type="text" id="name" autocomplete="name"><div class="er" id="e_name"></div>
@@ -187,9 +188,11 @@ $('submit').addEventListener('click',()=>{
   send(o);
 });
 /* آدرس Web App اسکریپت گوگل را بین گیومه‌ها بگذارید (باید با https://script.google.com/ شروع شود) */
-const ENDPOINT='https://script.google.com/macros/s/AKfycbw1HwGTeYyNnmNYLnzXUDjmLJisuGWdTIUiVeMFoC190Hk7T_Mvml1cnQzoPve5uoNmvw/exec';
+const ENDPOINT='PASTE_WEB_APP_URL_HERE';
+/* برای بستن ثبت‌نام true بگذارید */
+const CLOSED=false;
 const live=()=>ENDPOINT.startsWith('https://script.google.com/');
-const MSG={dup:'این شماره دانشجویی یا کد ملی قبلاً با اطلاعات دیگری ثبت شده است. با برگزارکنندگان تماس بگیرید.',gdup:'کد ملی مهمان قبلاً ثبت شده است. با برگزارکنندگان تماس بگیرید.',full:'ظرفیت ثبت‌نام تکمیل شده است.',bad:'اطلاعات واردشده معتبر نیست؛ فرم را بررسی کنید.',server:'خطای سرور؛ چند دقیقه بعد دوباره تلاش کنید.'};
+const MSG={dup:'این شماره دانشجویی یا کد ملی قبلاً با اطلاعات دیگری ثبت شده است. با برگزارکنندگان تماس بگیرید.',gdup:'کد ملی مهمان قبلاً ثبت شده است. با برگزارکنندگان تماس بگیرید.',full:'ظرفیت ثبت‌نام تکمیل شده است.',closed:'ثبت‌نام بسته شده است.',bad:'اطلاعات واردشده معتبر نیست؛ فرم را بررسی کنید.',server:'خطای سرور؛ چند دقیقه بعد دوباره تلاش کنید.'};
 async function send(o){
   if(!live()){store.set('az_mine',o);return showDone(o,'manual')}
   const b=$('submit');b.disabled=true;b.textContent='در حال ارسال…';$('subErr').textContent='';
@@ -219,6 +222,7 @@ $('cpTok').addEventListener('click',()=>copy($('tok').value));
 $('dlMine').addEventListener('click',()=>{const o=store.get('az_mine');if(o)save('registration-'+trkOf(o)+'.csv',csv([o]))});
 $('again').addEventListener('click',()=>{store.set('az_mine',null);['name','sid','year','nid','gname','gnid','grel'].forEach(i=>$(i).value='');$('hasG').checked=false;$('gBox').hidden=true;show('reg')});
 {const m=store.get('az_mine');if(m&&valid(m))showDone(m,m.sent?'sent':(live()?'unsent':'manual'))}
+if(CLOSED){[...$('v-reg').children].forEach(x=>x.hidden=x.id!=='closed');$('again').hidden=true;$('retry').remove()}
 
 /* ---- organizers ---- */
 let regs=(store.get('az_regs')||[]).filter(valid);
